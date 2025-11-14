@@ -7517,7 +7517,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Table-of-Contents:">Table of Contents:<a class="anchor-link" href="#Table-of-Contents:">¶</a></h3><h4 id="1.-How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">1. How has CWD changed in redwood forests throughout the inventory?<a class="anchor-link" href="#1.-How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">¶</a></h4><h5 id="Are-there-differences-between-p-ram-and-fire-status-or-burn-scar?">Are there differences between p-ram and fire status or burn scar?<a class="anchor-link" href="#Are-there-differences-between-p-ram-and-fire-status-or-burn-scar?">¶</a></h5><h5 id="What-are-the-main-drivers-of-CWD-change?">What are the main drivers of CWD change?<a class="anchor-link" href="#What-are-the-main-drivers-of-CWD-change?">¶</a></h5><p><strong>CWD Volume Modeling</strong><br/>
+<h3 id="Table-of-Contents:">Table of Contents:<a class="anchor-link" href="#Table-of-Contents:">¶</a></h3><h4 id="1.-How-many-redwood-genets-have-died?">1. <a href="#How-many-redwood-genets-have-died?">How many redwood genets have died?</a><a class="anchor-link" href="#1.-How-many-redwood-genets-have-died?">¶</a></h4><h5 id="How-many-ramets-have-died?">How many ramets have died?<a class="anchor-link" href="#How-many-ramets-have-died?">¶</a></h5><h5 id="How-do-survival/hazard-curves-differ-between-burn-scar-group,-p-ram/fire-presence?">How do survival/hazard curves differ between burn scar group, p ram/fire presence?<a class="anchor-link" href="#How-do-survival/hazard-curves-differ-between-burn-scar-group,-p-ram/fire-presence?">¶</a></h5><h4 id="2.-How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">2. <a href="#How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">How has CWD changed in redwood forests throughout the inventory?</a><a class="anchor-link" href="#2.-How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">¶</a></h4><h5 id="Are-there-differences-between-p-ram-and-fire-status-or-burn-scar?">Are there differences between p-ram and fire status or burn scar?<a class="anchor-link" href="#Are-there-differences-between-p-ram-and-fire-status-or-burn-scar?">¶</a></h5><h5 id="What-are-the-main-drivers-of-CWD-change?">What are the main drivers of CWD change?<a class="anchor-link" href="#What-are-the-main-drivers-of-CWD-change?">¶</a></h5><p><strong>CWD Volume Modeling</strong><br/>
 -<a href="#GLM-for-CWD-Volume">GLM for CWD Volume</a><br/>
 -<a href="#Mixed-Effect-Model-for-CWD">Mixed Effect Model for CWD</a><br/>
 -<a href="#Model-Comparison">Model Comparison</a></p>
@@ -7536,23 +7536,44 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0a203d97-51f3-4304-9c7a-7297e4c78392">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0a203d97-51f3-4304-9c7a-7297e4c78392">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-r"><pre><span></span><span class="c1">#getwd()</span>
+<div class="highlight hl-r"><pre><span></span><span class="nf">getwd</span><span class="p">()</span>
 <span class="c1">#setwd('sheets_calpoly')</span>
-<span class="c1">#getwd()</span>
-<span class="c1">#library('car')</span>
-<span class="c1">#library('mgcv')</span>
-<span class="c1">#library('lme4')</span>
-<span class="c1">#library('lmerTest')</span>
-<span class="c1">#library('ggplot2')</span>
+<span class="nf">getwd</span><span class="p">()</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'car'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'mgcv'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'lme4'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'lmerTest'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'ggplot2'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'survival'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'broom'</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">'ggsurvfit'</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+'C:/Users/benpa/Documents/juptyer/cal_poly/sheets_calpoly'
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+'C:/Users/benpa/Documents/juptyer/cal_poly/sheets_calpoly'
 </div>
 </div>
 </div>
@@ -7573,7 +7594,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="c1">#annova tests</span>
@@ -7715,13 +7736,578 @@ a.anchor-link {
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b5dc87e2-f854-45f6-867e-0c30a4252d9f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="How-many-redwood-genets-have-died?">How many redwood genets have died?<a class="anchor-link" href="#How-many-redwood-genets-have-died?">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a954f054-db57-4c42-98d2-4752dc0c867c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-r"><pre><span></span><span class="n">treeDB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">'rawsurvival.csv'</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">red_genet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">treeDB</span><span class="p">[</span><span class="n">treeDB</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">'SESE'</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">treeDB</span><span class="o">$</span><span class="n">GenetFail</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="c1">#only takes first row of genet id -- so we only count unique genet id,</span>
+<span class="c1">#not it repeating in future years</span>
+<span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="o">!</span><span class="nf">duplicated</span><span class="p">(</span><span class="n">red_genet</span><span class="o">$</span><span class="n">GenetId</span><span class="p">))</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">'number of unique dead redwood genets'</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span>
+<span class="n">red_surv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">treeDB</span><span class="p">[</span><span class="n">treeDB</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">'SESE'</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">treeDB</span><span class="o">$</span><span class="n">GenetFail</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="o">!</span><span class="nf">duplicated</span><span class="p">(</span><span class="n">red_surv</span><span class="o">$</span><span class="n">GenetId</span><span class="p">))</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">'number of unique alive redwood genets'</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">'percent mortality of genets:'</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">u</span><span class="o">/</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+'number of unique dead redwood genets 829'
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+'number of unique alive redwood genets 20053'
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+'percent mortality of genets: 0.041'
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e3d26354-0aee-4640-ada9-63eda0fd6d3d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-r"><pre><span></span><span class="n">uni_dead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">red_genet</span><span class="p">[</span><span class="o">!</span><span class="nf">duplicated</span><span class="p">(</span><span class="n">red_genet</span><span class="o">$</span><span class="n">GenetId</span><span class="p">),]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">uni_dead</span><span class="p">)</span>
+<span class="n">dead_group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">aggregate</span><span class="p">(</span><span class="n">GenetFail</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">p_ram.presence</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fire_presence</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">uni_dead</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">dead_group</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<table class="dataframe">
+<caption>A data.frame: 6 × 16</caption>
+<thead>
+<tr><th></th><th scope="col">X</th><th scope="col">BS_plot</th><th scope="col">Forest.type</th><th scope="col">Species</th><th scope="col">GenetId</th><th scope="col">RametId</th><th scope="col">SampleYear</th><th scope="col">t</th><th scope="col">RametFail</th><th scope="col">GenetFail</th><th scope="col">DBH</th><th scope="col">elevation</th><th scope="col">slope</th><th scope="col">group</th><th scope="col">p_ram.presence</th><th scope="col">fire_presence</th></tr>
+<tr><th></th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;chr&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;chr&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;dbl&gt;</th><th scope="col">&lt;dbl&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;chr&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">4526</th><td>4525</td><td>BS027</td><td>2</td><td>SESE</td><td>   17</td><td>1</td><td>2018</td><td>12</td><td>1</td><td>1</td><td>15.5</td><td>244</td><td>41</td><td>control    </td><td>1</td><td>0</td></tr>
+<tr><th scope="row">5302</th><td>5301</td><td>BS038</td><td>2</td><td>SESE</td><td> 6185</td><td>1</td><td>2007</td><td> 1</td><td>1</td><td>1</td><td> 5.9</td><td>553</td><td>33</td><td>dolan      </td><td>1</td><td>0</td></tr>
+<tr><th scope="row">5553</th><td>5552</td><td>BS038</td><td>2</td><td>SESE</td><td> 6183</td><td>1</td><td>2021</td><td>15</td><td>1</td><td>1</td><td> 2.4</td><td>553</td><td>33</td><td>dolan      </td><td>1</td><td>1</td></tr>
+<tr><th scope="row">5562</th><td>5561</td><td>BS038</td><td>2</td><td>SESE</td><td> 6188</td><td>1</td><td>2021</td><td>15</td><td>1</td><td>1</td><td> 5.0</td><td>553</td><td>33</td><td>dolan      </td><td>1</td><td>1</td></tr>
+<tr><th scope="row">5740</th><td>5739</td><td>BS038</td><td>2</td><td>SESE</td><td>15821</td><td>1</td><td>2021</td><td>15</td><td>1</td><td>1</td><td> 2.2</td><td>553</td><td>33</td><td>dolan      </td><td>1</td><td>1</td></tr>
+<tr><th scope="row">5839</th><td>5838</td><td>BS045</td><td>2</td><td>SESE</td><td>   39</td><td>1</td><td>2009</td><td> 3</td><td>1</td><td>1</td><td> 3.0</td><td>478</td><td>39</td><td>dolan_chalk</td><td>0</td><td>1</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<table class="dataframe">
+<caption>A data.frame: 4 × 3</caption>
+<thead>
+<tr><th></th><th scope="col">p_ram.presence</th><th scope="col">fire_presence</th><th scope="col">GenetFail</th></tr>
+<tr><th></th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;int&gt;</th><th scope="col">&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">1</th><td>0</td><td>0</td><td> 29</td></tr>
+<tr><th scope="row">2</th><td>1</td><td>0</td><td>123</td></tr>
+<tr><th scope="row">3</th><td>0</td><td>1</td><td>  3</td></tr>
+<tr><th scope="row">4</th><td>1</td><td>1</td><td>234</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3f69df3b-217d-4cea-8a2a-5c1a1e64898e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-r"><pre><span></span><span class="nf">run_anova2</span><span class="p">(</span><span class="n">dead_group</span><span class="p">,</span><span class="w"> </span><span class="s">'GenetFail'</span><span class="p">,</span><span class="w"> </span>
+<span class="w">           </span><span class="s">'fire_presence'</span><span class="p">,</span><span class="w"> </span><span class="s">'p_ram.presence'</span><span class="p">,</span><span class="w"> </span><span class="n">logy</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[1] "===Running two-way ANOVA...==="
+=== Group Means by fire_presence ===
+  fire_presence GenetFail
+1             0      76.0
+2             1     118.5
+
+=== Group Means by p_ram.presence ===
+  p_ram.presence GenetFail
+1              0      16.0
+2              1     178.5
+
+Overall mean: 97.25 
+
+=== Histogram of Response ===
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img alt="No description has been provided for this image" class="" height="420" src="data:image/png;base64,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" width="420"/>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[1] "===checking for balance==="
+   
+    0 1
+  0 1 1
+  1 1 1
+
+=== ANOVA Table ===
+            Df Sum Sq Mean Sq
+x1           1   1806    1806
+x2           1  26406   26406
+x1:x2        1   4692    4692
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>Warning message in qtukey(conf.level, length(means), x$df.residual):
+"NaNs produced"
+Warning message in qtukey(conf.level, length(means), x$df.residual):
+"NaNs produced"
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Call:
+   aov(formula = formula_anova, data = data)
+
+Terms:
+                      x1       x2    x1:x2
+Sum of Squares   1806.25 26406.25  4692.25
+Deg. of Freedom        1        1        1
+
+Estimated effects may be unbalanced</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img alt="No description has been provided for this image" class="" height="420" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAAPFBMVEUAAAAzMzNNTU1N0tZo
+aGh8fHyMjIyampqnp6eysrK9vb3Hx8fQ0NDZ2dnh4eHp6enr6+vw8PD6n5n////KGSbTAAAA
+CXBIWXMAABJ0AAASdAHeZh94AAAgAElEQVR4nO2dbUOqbKNEuTm+VZrbx///X4+ALzBiaSG5
+mFkfrPACuaZZguhuF/sQwq8p/noHQpgCESmEAYhIIQxARAphACJSCAMQkUIYgIgUwgBEpBAG
+ICKFMAARKYQB+L1IRcPs7f4VZMFueWvobnnYcOvn9XJWFOVyfe9DHbdcnOnZk8vCqx3r2Zev
+x7wAL7+DE2UwkYpifvcK3y04s+hsdjv/4UMNIlKzLy/f05ffwYkyhEj1l895sXpohS8WtO75
+vPywLYvZenc4NHyUxeKhh/qyXPeK1NmX1yUi/Q2DibTfFuVjK9xe0H9Py9SyuO/sbliR7nrI
+vwaym5NjOJHOh6ZleXgZUz17L5vmr4pldd97WczXl3GXYXLOJXec79m0Xi2tmy1vDud6522u
+qgPWvrP4tH63XKvD66z55rwnHZHemp3cnR7r/M1pX46r7Gb1QfGyA5JIa7LXQz+X1Qu9TXdf
+u1NYHxYvdzKidwKddcq37nTOu9HdveMudbbz1mznsMbsfbSZTIjhRDp2bn18NVIFVlZnQ/WR
+qije6qWr0wqtYV2R9I7zPavi4/Kg9W/mo2htc35+1MviXpHKy/5dibQ6rbk6HvI+irfTfR2R
+FvWo1g50E2lP9mroppXQjSk0+1HKJPsmoOss29N501WPy5td6mynGbpZ1l/e+zbxhJlMiSFf
+I1XBfR6y3+13h/y2VdCL6kX6phpUHjRY12ZVK3SGdY5H7Ts698yKXfeBP+un0+ZxD9vf7HeL
+6ipEd3F7F2veajXe6usVVyKdd3J7PBLN691obeS4ynwnO9BNpD3Zq6Gz+hnho3qEm1Mo1/td
+fSp7/RjdCbTWKZoH7ZuO7F69S7KddVX6svky69vE8DOZFANetaufu1fHZ5zmtG5ZbDbFsh7U
+FLJcNV3sDGv3vLt++56rk/9VY9ausrV5+ts1m24v7u7i/uzjxaF28+pj3mf10Iu6frvW6WRH
+pI3uQDeR9mSvhrYmcmMKy/qYUD/49WN0J9Cadn0c2ZWt6Vx2o7t7m5vbaZ17P38mk2JAkRZV
+9WbH6I9P6eWBetDxgvVi1sTfGdY97rTX7xPp7MSs5Ufr0NO7+CLSgc/127xfpOaY1zzDVr/v
+85ndeVx7lZls9zxSJitDF4eXFR/bq8WdKZwPvr2P0Z1Ad53FZTqt3ejs3nlEazu71j1F7yae
+MpPpMNip3e7wqnTT+iU032yOz2OnZ/bZMefOsN7jztWLm/JU88vvq/d3d2Pxmffy/Ou8vthw
++Vofklpndj0itR+pk4hMVoZu6x2oX9LfnELrUa8eQyfQXWd+mU5rNzq7V3y1nW4iz53JlBhM
+pPok+FuR5j8Xadk+ub6x2heLT7wfzvVXH9tvRaoOSe0zu16R+vK4nuzV0HX9mv7tnilcP8bV
+BLrrXFswl00cR9zYzs1NDD+TSTGgSNfnbK1Tu+OJ8S9O7dba6var6Nbv7sbiywPIle/2/u9a
+w+fFrn1m1yPS1cv400iZbN/Qz2V1KevmFM4nRNePcTWBTmV3rem0dqOze8VX29l3EnnqTCbF
+oEeksnnTqOJ0seF9fbzY0LzSvFxsaA1r97y7fudZrPWG7PGF7LJ52Hnnd3djcXd31/0i1a/X
+N80rg3XxNmud2fWI1H6kbiLdyfYP/XIKzav1sm/Fqwk0X5qrI9Vxpm83urv31XYkkWfOZFIM
+J9KmrIp+OFVYNZevP4/voc6Ol7/X9XXUXbNCZ1jR6mvnjq5I1UeEqpe2u82qfmfis35P4rOU
+69zdxdu9bGZW2XK8SnwlUnXZ7qNsnqr3s7LzgdlrkdqP1E2kO1kZ2lw0XlXP9jemsC7Kz/NF
+Y32Mqwk0X97rK9UfRXs6l93o+YXd2I4k8syZTIohRDpxfCJvaN6QXde/4WrQ4ry0zrk9bNZ+
+Adq+Q86rt4vzQ61aQ1uHrvamV5cttzfzftrEpkekzjuY66J9ZtcjUvuRuonIZLtDj29jltvb
+U1hd5Xl5jKsJHL80b4K+tadz2Y3u7n25ne5p7zNnMimGE2lx/OBB+yNCVYCH07D6I0KHSOul
+x5wvw/afs/bH9Fp3iEiH+1bz+pGOz7Hb1ekDLZ0mXBYft9zZzHu1+c36/D5I5zVe9RGhzfHH
+XftI2StS65G6iehku0M39Qdrtl9N4f2w46sbj6ETOH35uP6I0Hk3ZPe+3E5HpKfOZEr8XqT7
+HmakxxmS92L2/aA+XmSyA+zGi8yEQES6xefptdLDvMhkI9KYRKR+HjybL1q8ymRbu9HZvZ9t
+InxNROpn9tjZfERyJ0mFMAARKYQBiEghDEBECmEAIlIIAxCRQhiAiBTCAESkEAYgIoUwAL8V
+6b8QhmeQbo/Kr0UaZC+eyr+/3oEXA5AHoFVKRLIDkAegVUpEsgOQB6BVyvcinf4QUHn85vRz
+A2DKgOKMCiAPQKuUb0UqTzel/NwAmDKgOKMCyAPQKiUi2QHIA9Aq5b7XSOXFnYhEB5AHoFXK
+/SKdXiLtTzfNe0j/QhiaqYrUFihHJDqAPACtUu4W6fRNRKIDyAPQKuUekcr2dxGJDiAPQKuU
+O0QqL7cRaQIA8gC0SrnjDdnLF7nYUAGYMqA4owLIA9Aq5fv3kfQTDflkAxxAHoBWKfmsnR2A
+PACtUiKSHYA8AK1SIpIdgDwArVIikh2APACtUiKSHYA8AK1SIpIdgDwArVIikh2APACtUiKS
+HYA8AK1SIpIdgDwArVIikh2APACtUiKSHYA8AK1SIpIdgDwArVIikh2APACtUiKSHYA8AK1S
+IpIdgDwArVIikh2APACtUiKSHYA8AK1SIpIdgDwArVIikh3f5VH8/f/iCGiVEpHsiEjPICLZ
+AcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0Col
+ItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQ
+KiUi2QHIA9AqJSLZAcgD0ColItlR5fHfKPx4FwGtUiKSHRHpGUQkOyLSM4hIdgDyALRKiUh2
+APIAtEqJSHYA8gC0SolIdgDyALRKiUh2APIAtEqJSHYA8gC0SolIdgDyALRKiUh2APIAtEqJ
+SHYA8gC0SolIdgDyALRKiUh2APIAtEqJSHYA8gC0SolIdgDyALRKiUh2APIAtEqJSHYA8gC0
+SolIdgDyALRKiUh2APIAtEqJSHYA8gC0SolIdgDyALRKiUh2APIAtEqJSHYA8gC0SolIdgDy
+ALRKiUh2APIAtEr5tUj/QhgaR5EG2YunAngGHhVAHoBWKRHJDkAegFYpEckOQB6AVikRyQ5A
+HoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJ
+DkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYp
+EckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6A
+VikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5A
+HoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJ
+DkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYp
+EckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6A
+VikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5A
+HoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKd+L
+VB7o+9oAmDKgOKMCyAPQKuVbkcrjjX49ApgyoDijAsgD0ColItkByAPQKuW+10gRaUIA8gC0
+SvmNSP9V/AthaKYqUrnPEWk6APIAtEqJSHYA8gC0SrlHpLJ9E5HoAPIAtEq5Q6TychuRJgAg
+D0CrlDvekG19iUgTAJAHoFXK9+8jlcePMuSTDRMBkAegVUo+a2cHIA9Aq5SIZAcgD0CrlIhk
+ByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuU
+iGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9A
+q5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcg
+D0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhk
+ByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuU
+iGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9A
+q5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcg
+D0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhk
+ByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5Rfi/QvhKFxFGmQvXgqgGfg
+UQHkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiV
+EpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQB
+aJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA
+5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR
+7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiV
+EpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQB
+aJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA
+5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR
+7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiV
+EpHsAOQBaJUSkewA5AFolRKR7ADkAWiVco9IZXNbcfx6uQ8wZUBxRgWQB6BVyh0iHb052lO2
+vt8jpgwozqgA8gC0SvlepHIfkSYFIA9Aq5S7T+3Kvh8QUwYUZ1QAeQBapdwv0ukl0nnJ/r+K
+fyEMzaRFOt7kiEQHkAegVcr9V+2O30UkOoA8AK1SIpIdgDwArVJyamcHIA9Aq5SHRJKLDRWA
+KQOKMyqAPACtUh77ZEP7awNgyoDijAogD0CrlHzWzg5AHoBWKRHJDkAegFYpEckOQB6AVikR
+yQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBW
+KRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAe
+gFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckO
+QB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikR
+yQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBW
+KRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAe
+gFYpEckOQB6AViltkYo2d64PmDKgOKMCyAPQKiUi2QHIA9AqJad2dgDyALRKiUh2APL4slWH
+s6VFMd/Kss9yvt9vFkVRrk5jFvvtrFjsrlY7Dt4ti2JZ3/tWFrP36pvzoqLYLpot7c/fXMb3
+7lV3D3NqN30AeXwj0qHRRbnrLpsXy/26qe6q+vmgVPExO9wsr1ZrBu/LauzscM+qXqsy6bzo
+MPC4pV39zaJ9Z/9edfYmIhkAyOMbkea7/bxYdZdVP86Kj/3+s+pu5c9HtfDj3OTLas3gt+p2
+VflzOPzsN0XZXXQY/F4tWx22tKk2crmzf6+eOeXXAFCcUQHk8Y1In4cTru6xoXKhYrt+mzci
+baub+vBztVozeFbfUR1rymK5rodcFjVDqnVnxfHQd7mzf68en2WHiIQDkMd3r5H2LUFayw4H
+nOPZVP3z5aa72um70+D14aRttu0s0sGdO/v3Sn5e5dRu6gDy+KFIy2L2vt4+LNLhdHBWlJtB
+RTp7FJEmCyCPb0TaVudo8+6y8+3upkin1ZpFs07F35vTuOvtyand7b3q/lgWn/Niu5sXmy/X
+uhCRcADy+O5iw/7Q0LfusuZ2U91zS6TTas2iVXXx4KMSqzys9tlcWDgtuohULfs8fdPc2b9X
+upP7t2J9sPrW+Iem/BoAijMqgDy+E6m6ji3LqttV99Sse3NZrRncXNeurkA0q721F11E2p6u
+el/u7N8r3cn9urn8N8SUf83du/EVgOKMCiCP707t5sVS35CtvywPtmxuinRa7Th4W4+uvluV
+RfnWWdQ6VTycojWrXcb37lX3x0XxUV0h3ESk6QLI446LDQ8zSJe+2Hz3x8qg+hrisn/4FTm1
+wwHIgy/Sfj2rD5Cr3sE9RCQcgDzuE+mxj+GMLNKjRCQcgDwcRfoXwtAAnp4V+dDqwwCmDHgG
+HhVAHoBWKVciPWgTYMqA4owKIA9Aq5SIZAcgD0CrFBOR/huFv57pfUSkZxCRItLrAUmyTUSK
+SK8HJMk2JiKFC4A8AK1SuiIVj73HtUdMGVCcUQHkcX+rXqZ/EckOQB5wkX7Cy0zkNoDijAog
+j4j0igCKMyqAPPginU7pyvJ6aC8vM5HbAIozKoA84CKVeY3kACCPb1r1iu8+tIV5b3l06w9K
+KhEJByCP70T6Xx+vI9L+Bx8Aj0g4AHnwRXqYiIQDkMcQIj3w+mQIrh7rfVH92YZbf3ToioiE
+A5DHACIV55txkIfazWqRi/yByOkCyIMv0rJYVa+Tbv9BSSUi4QDkcbdIRfGiIp3+uF4uf08X
+QB53X/4uiluXvyPS4ACKMyqAPCZzarfKH4icLoA8+CId/1J4UW77h18RkXAA8uCLtN+/zYpi
+trr5nzcrEQkHII8piPQgEQkHII+I9IoAijMqgDwm8MmGVZlPf08cQB7wT3/v83/IOgDIA/7v
+kfbVP0m6999PHHmZidwGUJxRAeTBFyn/jGL6APLgi7Qo7r7w3fAyE7kNoDijAsgD0CpFRNqW
+83vfim0ATBlQnFEB5AFolXJ1apeLDVMHkAegVUpEsgOQB6BVSt6QtQOQB6BVSkSyA5AHoFVK
+/maDHYA8+Je/8zcbpg8gD75I+ZsN0weQB1+k/FPz6QPIIyK9IoDijAogD/6nv/M3G6YPII/v
+RPq/Pl5KpPzNhukDyIMvUv5mw/QB5DEFkR4kIuEA5DGMSGP+S/OI5Acgj0FEGvVPNohIn8vj
+51bvfT82IvEA5DGESMUfHpFWRbFrRLr3v5CNSDwAedwtUlG84qndpijXzRFxUXzcuX5EwgHI
+Y4A/or//Q5GWtT6VSOticef6EQkHIA/4xYay/oMN9Wu0fLJhugDygIvU2BORJg4gj0mI1Hx7
+79WGiIQDkAdcpMX5qvc6n7WbLoA84CJd/hXSrFjfuX5EwgHIAy7Sfl7MKoHWs7v/XV9E4gHI
+A//PKObHv8V1t0cRiQcgD/4/7Fsvy6JY3Htet3+hidwGUJxRAeTBF+lhXmYitwEUZ1QAeUSk
+VwRQnFEB5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolXKPSM3HhcoD7a8NgCkDijMqgDwA
+rVLuEOnoz/Hm8kMNYMqA4owKIA9Aq5TvRSr3EWlSAPIAtEq5+9QuIk0FQB6AVim/Ean+gNO/
+EIbGTKQKwJQBz8CjAsgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiWfbLAD
+kAegVUo+a2cHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuU
+iGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9A
+q5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcg
+D0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhk
+ByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuU
+iGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9A
+q5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcg
+D0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhk
+ByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuU
+iGQHIA9Aq5SIZAcgD0CrlF+L9C+EoXEUaZC9eCqAZ+BRAeQBaJUSkewA5AFolRKR7ADkAWiV
+EpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQB
+aJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA
+5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR
+7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiV
+EpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQB
+aJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA
+5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR
+7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiV
+EpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQB
+aJVyv0hlxfHrZSlgyoDijAogD0CrlAdEan25mASYMqA4owLIA9AqJSLZAcgD0CrlbpHK9teI
+BAaQB6BVyv0inV4i7U83+/8q/oUwNJMW6XiTIxIdQB6AVimPXf6OSBMAkAegVUpEsgOQB6BV
+Sk7t7ADkAWiV8pBIcrGhAjBlQHFGBZAHoFXKY59saH9tAEwZUJxRAeQBaJWSz9rZAcgD0Col
+ItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQ
+KiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHI
+A9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZ
+AcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0Col
+ItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQ
+KiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHI
+A9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZAcgD0ColItkByAPQKiUi2QHIA9AqJSLZ
+AcgD0Crl70T6bxT2iOKMCiCPiPTImhHpbwDkEZEeWTMi/Q2APCLSKwIozqgA8gC0SolIdgDy
+ALRKiUh2APIAtEqJSHYA8gC0SolIdgDyALRKiUh2APIAtEqJSHYA8gC0SolIdgDyALRKiUh2
+APIAtEr5tUj/QhgaR5EG2YunAngGHhVAHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJ
+DkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYp
+ry1S8dvdqwAUZ1QAeUSkgYlITwCQR0R6RQDFGRVAHoBWKRHJDkAegFYpEckOQB6AVikRyQ5A
+HoBWKRHJDkAegJZxrSoAAAXlSURBVFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6A
+VikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5A
+HoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJ
+DkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYp
+EckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6A
+VikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHJDkAegFYpEckOQB6AVikRyQ5A
+HoBWKRHJDkAegFYpEckOQB6AVikRyQ5AHoBWKRHpVfhvFPaIPACtUiLSqxCRLgBapUSkVyEi
+XQC0SolIdgDyALRKiUh2APIAtEp5XKTywOUnwJQBxRkVQB6AVikPi1Seb2oAUwYUZ1QAeQBa
+pUQkOwB5AFqlRCQ7AHkAWqX8RqT6euq/EIbGTKQKwJQBz8CjAsgD0ColItkByAPQKiUi2QHI
+A9AqJSLZAcgD0ColItkByAPQKiWfbLADkAegVUo+a2cHIA9Aq5SIZAcgD0CrlIhkByAPQKuU
+iGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9Aq5SIZAcgD0CrlIhkByAPQKuUiGQHIA9A
+q5SIZMeP8ih+W5SHALRKiUh2RKRnEJHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUS
+kewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFo
+lRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADk
+AWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHs
+AOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUSkewA5AFolRKR7ADkAWiVEpHsAOQBaJUS
+kewA5AFolRKR7ADkAWiV8muRQhieQbo9KqP+j4Z/A/C38lSSxzOISHYkj2cQkexIHs/AQKQQ
+nk9ECmEAIlIIAxCRQhiAiBTCAESkEAZg8iKVB/56H16LxPEMpi5Seb4JDXleeQoRyYwyaTyF
+iGRH0ngGEcmOpPEMIpIdSeMZRCQ7ksYziEh2JI1nEJHsSBrPICLZkTSewdRFyicbrkgcz2Dy
+IoUwBhEphAGISCEMQEQKYQAiUggDEJFCGICIFMIARKQfsJ0XxaxIdOFC2vADyqLmr3cjvBBp
+ww+IQ0FJJR6nORxVNhXFZznf73fLoljuZMx+Ucy3+54xb2Uxe6++OS8qiu2iKFfVsvM3PdsM
+L0xEepy2SPNieTzVm8mYgwhFubses6pXr0w6LzoMrL49CLSrv1nse7cZXpiI9APqU7tGpOro
+8Vbdrmo3WkPmu/28ukPHHA4/+01RdhcdBr9Xy1YH5zbVlvu2GV6YiPQDWiJVJ2+zOsT6ONIa
+8nk4T6sOKTqmLJbreshlUTOk2uCsOJ7N9W0zvDAR6Qe0RGp+vL6Kd7rnesz6cNI223YW6eAb
+2wwvTH5TP+BXIu33n7Oi3ESkaZHf1A8QkWY9IdZna9ti3j/mvTmN62yv79QuYMjv6weISKvq
+wsBHJU17yHy/mxdv12PKYrP/bC4snBZdRKqWfZ6+0W2GFyYi/QARqblmXV1daA+ZV5e/99dj
+msvfb+1FF5G2p6vefdsML0xE+gEi0n67PHizkSHbebE8XYzrjFmVRfnWWXQRaf958K9erWeb
+4YWJSM8hlwnMyO/7OUQkM/L7HpDiTERyI7/vAYlIvuT3HcIARKQQBiAihTAAESmEAYhIIQxA
+RAphACJSCAMQkUIYgP8HjQOzDW/BqYsAAAAASUVORK5CYII=" width="420"/>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e3857186-0aea-42c8-a372-12a69fe222a0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="GLM-for-CWD-Volume">GLM for CWD Volume<a class="anchor-link" href="#GLM-for-CWD-Volume">¶</a></h4><p>This only focuses on redwood forests. We know there are na's for data from 2006/7, so we will drap na's and only analyze post 2007.</p>
+<h3 id="How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">How has CWD changed in redwood forests throughout the inventory?<a class="anchor-link" href="#How-has-CWD-changed-in-redwood-forests-throughout-the-inventory?">¶</a></h3><h4 id="GLM-for-CWD-Volume">GLM for CWD Volume<a class="anchor-link" href="#GLM-for-CWD-Volume">¶</a></h4><p>This only focuses on redwood forests. We know there are na's for data from 2006/7, so we will drap na's and only analyze post 2007.</p>
 </div>
 </div>
 </div>

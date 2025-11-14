@@ -7520,9 +7520,10 @@ a.anchor-link {
 <h1 id="Big-Sur-Plot-Network">Big Sur Plot Network<a class="anchor-link" href="#Big-Sur-Plot-Network">¶</a></h1><h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><p><a href="#Import">- Workbook libraries, styles and classes</a><br/>
 <a href="#Plot-grouping">- Plot disturbance grouping</a><br/>
 <a href="#Load-raw-tree-database,-add-dummy-variables-for-fire-&amp;-p_ram-presence">- Load raw tree database, add dummy variables for fire &amp; p_ram presence</a><br/>
-<a href="#Add-dummy-variables-for-survival-and-censor-status">- Add dummy variables for survival and censor status</a><br/>
+<a href="#Add-two-dummy-variables-for-failure-and-censor-status-based-on-genet/ramet">- Add two dummy variables for failure and censor status based on genet/ramet </a><br/>
 <a href="#Add-basal-area">- Add basal area</a><br/>
 <a href="#Course-Woody-Debris-Analysis">- Course Woody Debris Analysis</a><br/>
+<a href="#Survival-analysis-dataframe">- Survival analysis dataframe</a><br/>
 <a href="./modeling_R.html">- Link to modeling document</a></p>
 </div>
 </div>
@@ -7853,7 +7854,7 @@ Name: count, dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">df_year</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">"(?i)big sur|Original Sample|Oct. 2008|done"</span><span class="p">)</span>
@@ -7890,7 +7891,7 @@ breakdown of the amount of plots per year
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[48]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Text(0.5, 1.0, 'Plots per year post 2007')</pre>
 </div>
@@ -7930,7 +7931,7 @@ breakdown of the amount of plots per year
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [71]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">df_burnPlot</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">"(?i)Big Sur|burned|1st P.ram|elevation|slope|forest"</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
@@ -7971,7 +7972,7 @@ breakdown of the amount of plots per year
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[71]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8075,7 +8076,7 @@ breakdown of the amount of plots per year
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [72]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">dfYearBurn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_inv_year</span><span class="p">,</span> <span class="n">df_burn</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'BS_plot'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
@@ -8124,13 +8125,15 @@ breakdown of the amount of plots per year
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [73]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [76]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_tree</span> <span class="o">=</span> <span class="n">bs_data</span><span class="p">[</span><span class="s1">'tree_data'</span><span class="p">]</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">"(?i)BS|species|Sample|DBH|status|</span><span class="se">\</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_tree</span> <span class="o">=</span> <span class="n">bs_data</span><span class="p">[</span><span class="s1">'tree_data'</span><span class="p">]</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">"(?i)BS|stemid|species|Sample|DBH|status|</span><span class="se">\</span>
 <span class="s2">basal|epicor|deadclass|logclass|snag|crown|health"</span><span class="p">)</span>
-<span class="n">df_tree</span> <span class="o">=</span> <span class="n">df_tree</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">]]</span>
 <span class="n">df_tree</span> <span class="o">=</span> <span class="n">df_tree</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">df_tree</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="s1">'BS_plot'</span><span class="p">})</span>
+<span class="n">df_tree</span> <span class="o">=</span> <span class="n">df_tree</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1">#make two columns for unique genet id and ramet id</span>
+<span class="n">df_tree</span><span class="p">[[</span><span class="s1">'GenetId'</span><span class="p">,</span> <span class="s1">'RametId'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df_tree</span><span class="p">[</span><span class="s1">'StemID'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">df_tree</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -8142,7 +8145,7 @@ breakdown of the amount of plots per year
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[73]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[76]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8164,6 +8167,7 @@ breakdown of the amount of plots per year
 <th></th>
 <th>BS_plot</th>
 <th>Species</th>
+<th>StemID</th>
 <th>SampleYear</th>
 <th>CrownPosition</th>
 <th>HealthClass</th>
@@ -8173,6 +8177,8 @@ breakdown of the amount of plots per year
 <th>Status</th>
 <th>DeadClass</th>
 <th>SnagHeight</th>
+<th>GenetId</th>
+<th>RametId</th>
 </tr>
 </thead>
 <tbody>
@@ -8180,6 +8186,7 @@ breakdown of the amount of plots per year
 <th>0</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-1</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -8189,11 +8196,14 @@ breakdown of the amount of plots per year
 <td>L</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>5169</td>
+<td>1</td>
 </tr>
 <tr>
 <th>1</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-2</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -8203,11 +8213,14 @@ breakdown of the amount of plots per year
 <td>L</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>5169</td>
+<td>2</td>
 </tr>
 <tr>
 <th>2</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-3</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -8217,11 +8230,14 @@ breakdown of the amount of plots per year
 <td>L</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>5169</td>
+<td>3</td>
 </tr>
 <tr>
 <th>3</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5170-1</td>
 <td>2006</td>
 <td>U</td>
 <td>1.0000</td>
@@ -8231,11 +8247,14 @@ breakdown of the amount of plots per year
 <td>L</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>5170</td>
+<td>1</td>
 </tr>
 <tr>
 <th>4</th>
 <td>BS002</td>
 <td>SESE</td>
+<td>5171-1</td>
 <td>2006</td>
 <td>E</td>
 <td>1.0000</td>
@@ -8245,10 +8264,59 @@ breakdown of the amount of plots per year
 <td>L</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>5171</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0ddfd12c-602f-49dd-80ee-a027d3cdc324">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Descriptions for variables:</p>
+<ul>
+<li>crown position -- intermediate, understory, emergent, dominant, codominant, stump</li>
+<li>health class -- 1 is healthy, 2 fair, 3poor, 0dead no resprout, 5dead resprout,</li>
+<li>dead class --</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=82539dfa-bad3-4f0c-b0ed-38a4a8f7c550">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [77]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df_tree</span><span class="p">[</span><span class="s1">'CrownPosition'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_tree</span><span class="p">[</span><span class="s1">'HealthClass'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_tree</span><span class="p">[</span><span class="s1">'DeadClass'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>['I' 'U' 'E' 'D' 'C' nan 'S']
+[ 1.  2.  3.  5.  4.  6.  0. nan]
+[nan 'C' 'B' '1' '2' '6' '3' 'A' '4' '7' '5' 'X' 'a']
+</pre>
 </div>
 </div>
 </div>
@@ -8258,7 +8326,7 @@ breakdown of the amount of plots per year
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [127]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#merge plot data and tree data</span>
@@ -8333,6 +8401,7 @@ breakdown of the amount of plots per year
 <th></th>
 <th>BS_plot</th>
 <th>Species</th>
+<th>StemID</th>
 <th>SampleYear</th>
 <th>CrownPosition</th>
 <th>HealthClass</th>
@@ -8340,8 +8409,10 @@ breakdown of the amount of plots per year
 <th>EpicormicSprouts</th>
 <th>DBH</th>
 <th>Status</th>
-<th>DeadClass</th>
+<th>...</th>
 <th>SnagHeight</th>
+<th>GenetId</th>
+<th>RametId</th>
 <th>Forest type</th>
 <th>elevation</th>
 <th>slope</th>
@@ -8356,6 +8427,7 @@ breakdown of the amount of plots per year
 <th>5448</th>
 <td>BS038</td>
 <td>UMCA</td>
+<td>6174-1</td>
 <td>2021</td>
 <td>I</td>
 <td>4.0000</td>
@@ -8363,8 +8435,10 @@ breakdown of the amount of plots per year
 <td>False</td>
 <td>3.7000</td>
 <td>D</td>
-<td>2</td>
+<td>...</td>
 <td>NaN</td>
+<td>6174</td>
+<td>1</td>
 <td>2</td>
 <td>553</td>
 <td>33</td>
@@ -8377,6 +8451,7 @@ breakdown of the amount of plots per year
 <th>5449</th>
 <td>BS038</td>
 <td>UMCA</td>
+<td>6174-2</td>
 <td>2021</td>
 <td>I</td>
 <td>4.0000</td>
@@ -8384,8 +8459,10 @@ breakdown of the amount of plots per year
 <td>False</td>
 <td>4.3000</td>
 <td>D</td>
-<td>2</td>
+<td>...</td>
 <td>NaN</td>
+<td>6174</td>
+<td>2</td>
 <td>2</td>
 <td>553</td>
 <td>33</td>
@@ -8396,6 +8473,7 @@ breakdown of the amount of plots per year
 </tr>
 </tbody>
 </table>
+<p>2 rows × 21 columns</p>
 </div>
 </div>
 </div>
@@ -8408,30 +8486,33 @@ breakdown of the amount of plots per year
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Add-dummy-variables-for-survival-and-censor-status">Add dummy variables for survival and censor status<a class="anchor-link" href="#Add-dummy-variables-for-survival-and-censor-status">¶</a></h3><p>For survival status:</p>
+<h3 id="Add-two-dummy-variables-for-failure-and-censor-status-based-on-genet/ramet">Add two dummy variables for failure and censor status based on genet/ramet<a class="anchor-link" href="#Add-two-dummy-variables-for-failure-and-censor-status-based-on-genet/ramet">¶</a></h3><p>Assumptions:<br/>
+basal sprout = True for both genet and ramet<br/>
+if a ramet has died basal sprout = false<br/>
+Status class based on the ramet<br/>
+Tree numbers start from 1 and are not unique numbers from other plots
+For ramet fail status:</p>
 <ul>
 <li>Status D = 1</li>
 <li>All else = 0</li>
 </ul>
-<p>For censor status:</p>
-<ul>
-<li>Status D = 0</li>
-<li>All else = 1</li>
-</ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8a287f48-b0b3-4c8b-ad64-ae9ab8af31a6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=621156f2-33e6-4ffa-b9a0-a7109ae622fb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [128]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [84]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'dead'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'Status'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'D'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> 
-<span class="n">treeDB</span><span class="p">[</span><span class="s1">'censored'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'Status'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'D'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">treeDB</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'RametFail'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'Status'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'D'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">deadBs</span> <span class="o">=</span> <span class="n">treeDB</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'Status'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'D'</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">treeDB</span><span class="p">[</span><span class="s1">'BasalSprouts'</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span> 
+    <span class="p">]</span>
+<span class="n">deadBs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8442,7 +8523,7 @@ breakdown of the amount of plots per year
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[128]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[84]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8464,6 +8545,7 @@ breakdown of the amount of plots per year
 <th></th>
 <th>BS_plot</th>
 <th>Species</th>
+<th>StemID</th>
 <th>SampleYear</th>
 <th>CrownPosition</th>
 <th>HealthClass</th>
@@ -8471,8 +8553,9 @@ breakdown of the amount of plots per year
 <th>EpicormicSprouts</th>
 <th>DBH</th>
 <th>Status</th>
-<th>DeadClass</th>
-<th>SnagHeight</th>
+<th>...</th>
+<th>GenetId</th>
+<th>RametId</th>
 <th>Forest type</th>
 <th>elevation</th>
 <th>slope</th>
@@ -8480,24 +8563,25 @@ breakdown of the amount of plots per year
 <th>group</th>
 <th>p_ram presence</th>
 <th>fire_presence</th>
-<th>dead</th>
-<th>censored</th>
+<th>RametFail</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th>0</th>
+<th>38</th>
 <td>BS002</td>
-<td>LIDE</td>
+<td>UMCA</td>
+<td>5184-11</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
 <td>False</td>
 <td>False</td>
-<td>10.2000</td>
-<td>L</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>1.5000</td>
+<td>D</td>
+<td>...</td>
+<td>5184</td>
+<td>11</td>
 <td>2</td>
 <td>359</td>
 <td>33</td>
@@ -8505,103 +8589,442 @@ breakdown of the amount of plots per year
 <td>control</td>
 <td>0</td>
 <td>0</td>
-<td>0</td>
 <td>1</td>
 </tr>
 <tr>
-<th>1</th>
+<th>44</th>
 <td>BS002</td>
-<td>LIDE</td>
+<td>UMCA</td>
+<td>5186-3</td>
 <td>2006</td>
 <td>I</td>
-<td>1.0000</td>
+<td>2.0000</td>
 <td>False</td>
 <td>False</td>
-<td>1.2000</td>
-<td>L</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>2.2000</td>
+<td>D</td>
+<td>...</td>
+<td>5186</td>
+<td>3</td>
 <td>2</td>
 <td>359</td>
 <td>33</td>
 <td>2018</td>
 <td>control</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<th>2</th>
-<td>BS002</td>
-<td>LIDE</td>
-<td>2006</td>
-<td>I</td>
-<td>1.0000</td>
-<td>False</td>
-<td>False</td>
-<td>1.4000</td>
-<td>L</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>2</td>
-<td>359</td>
-<td>33</td>
-<td>2018</td>
-<td>control</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<th>3</th>
-<td>BS002</td>
-<td>LIDE</td>
-<td>2006</td>
-<td>U</td>
-<td>1.0000</td>
-<td>True</td>
-<td>False</td>
-<td>2.7000</td>
-<td>L</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>2</td>
-<td>359</td>
-<td>33</td>
-<td>2018</td>
-<td>control</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<th>4</th>
-<td>BS002</td>
-<td>SESE</td>
-<td>2006</td>
-<td>E</td>
-<td>1.0000</td>
-<td>True</td>
-<td>False</td>
-<td>112.0000</td>
-<td>L</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>2</td>
-<td>359</td>
-<td>33</td>
-<td>2018</td>
-<td>control</td>
-<td>0</td>
 <td>0</td>
 <td>0</td>
 <td>1</td>
 </tr>
 </tbody>
 </table>
+<p>2 rows × 22 columns</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b0444cdf-1c24-49cd-87e3-509e01382266">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Assumptions:<br/>
+Genet's can be tracked through the genet id column,<br/>
+genet's distinct remets can be found by multiple genet id rows with the genet id and different remet id.<br/>
+For a genet to die, all members of a unique tgenet id must have status = d</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=eb624895-7f46-4e1f-b789-0bf779661991">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [126]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#group by genet id, sampleyear, return series of status values, </span>
+<span class="c1">#if all of series is D, then GenetFail= 1, if one of series is not D, GenetFail=0</span>
+<span class="n">genet_status</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">treeDB</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'GenetId'</span><span class="p">,</span><span class="s1">'SampleYear'</span><span class="p">])[</span><span class="s1">'Status'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="s1">'D'</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+        <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'GenetFail'</span><span class="p">))</span>
+<span class="n">surDB</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">treeDB</span><span class="p">,</span> <span class="n">genet_status</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">'GenetId'</span><span class="p">,</span><span class="s1">'SampleYear'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'check to see dead remet but genet lives on - remet fail 1 vs genet fail 0'</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="n">surDB</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">surDB</span><span class="p">[</span><span class="s1">'GenetFail'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">surDB</span><span class="p">[</span><span class="s1">'RametFail'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'check to see dead genet - remet fail 1 vs genet fail 1'</span><span class="p">)</span>
+<span class="n">indG</span> <span class="o">=</span> <span class="n">surDB</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">surDB</span><span class="p">[</span><span class="s1">'GenetFail'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">surDB</span><span class="p">[</span><span class="s1">'RametFail'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">indG</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>check to see dead remet but genet lives on - remet fail 1 vs genet fail 0
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>BS_plot</th>
+<th>Species</th>
+<th>StemID</th>
+<th>SampleYear</th>
+<th>CrownPosition</th>
+<th>HealthClass</th>
+<th>BasalSprouts</th>
+<th>EpicormicSprouts</th>
+<th>DBH</th>
+<th>Status</th>
+<th>...</th>
+<th>Forest type</th>
+<th>elevation</th>
+<th>slope</th>
+<th>P_ram detection</th>
+<th>group</th>
+<th>p_ram presence</th>
+<th>fire_presence</th>
+<th>RametFail</th>
+<th>BasalArea/Plot</th>
+<th>GenetFail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>18</th>
+<td>BS002</td>
+<td>SESE</td>
+<td>5180-2</td>
+<td>2006</td>
+<td>D</td>
+<td>1.0000</td>
+<td>True</td>
+<td>False</td>
+<td>2.9000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0001</td>
+<td>0.0000</td>
+</tr>
+<tr>
+<th>38</th>
+<td>BS002</td>
+<td>UMCA</td>
+<td>5184-11</td>
+<td>2006</td>
+<td>I</td>
+<td>1.0000</td>
+<td>False</td>
+<td>False</td>
+<td>1.5000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr>
+<th>44</th>
+<td>BS002</td>
+<td>UMCA</td>
+<td>5186-3</td>
+<td>2006</td>
+<td>I</td>
+<td>2.0000</td>
+<td>False</td>
+<td>False</td>
+<td>2.2000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0001</td>
+<td>0.0000</td>
+</tr>
+<tr>
+<th>80</th>
+<td>BS002</td>
+<td>UMCA</td>
+<td>5192-18</td>
+<td>2006</td>
+<td>C</td>
+<td>1.0000</td>
+<td>False</td>
+<td>False</td>
+<td>1.7000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr>
+<th>129</th>
+<td>BS002</td>
+<td>SESE</td>
+<td>5173-2</td>
+<td>2010</td>
+<td>E</td>
+<td>1.0000</td>
+<td>True</td>
+<td>False</td>
+<td>6.9000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0005</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>check to see dead genet - remet fail 1 vs genet fail 1
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>BS_plot</th>
+<th>Species</th>
+<th>StemID</th>
+<th>SampleYear</th>
+<th>CrownPosition</th>
+<th>HealthClass</th>
+<th>BasalSprouts</th>
+<th>EpicormicSprouts</th>
+<th>DBH</th>
+<th>Status</th>
+<th>...</th>
+<th>Forest type</th>
+<th>elevation</th>
+<th>slope</th>
+<th>P_ram detection</th>
+<th>group</th>
+<th>p_ram presence</th>
+<th>fire_presence</th>
+<th>RametFail</th>
+<th>BasalArea/Plot</th>
+<th>GenetFail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>237</th>
+<td>BS002</td>
+<td>QUAG</td>
+<td>5200-1</td>
+<td>2010</td>
+<td>U</td>
+<td>4.0000</td>
+<td>True</td>
+<td>False</td>
+<td>1.2000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0000</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<th>374</th>
+<td>BS002</td>
+<td>QUAG</td>
+<td>5200-1</td>
+<td>2013</td>
+<td>U</td>
+<td>0.0000</td>
+<td>False</td>
+<td>False</td>
+<td>1.4000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.0000</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<th>415</th>
+<td>BS002</td>
+<td>LIDE</td>
+<td>5182-1</td>
+<td>2018</td>
+<td>I</td>
+<td>4.0000</td>
+<td>True</td>
+<td>False</td>
+<td>9.8000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.0010</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<th>416</th>
+<td>BS002</td>
+<td>LIDE</td>
+<td>5182-2</td>
+<td>2018</td>
+<td>I</td>
+<td>4.0000</td>
+<td>True</td>
+<td>False</td>
+<td>8.0000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.0007</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<th>417</th>
+<td>BS002</td>
+<td>LIDE</td>
+<td>5183-1</td>
+<td>2018</td>
+<td>C</td>
+<td>0.0000</td>
+<td>False</td>
+<td>False</td>
+<td>25.1000</td>
+<td>D</td>
+<td>...</td>
+<td>2</td>
+<td>359</td>
+<td>33</td>
+<td>2018</td>
+<td>control</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.0069</td>
+<td>1.0000</td>
+</tr>
+</tbody>
+</table>
+<p>5 rows × 24 columns</p>
 </div>
 </div>
 </div>
@@ -8625,14 +9048,14 @@ BA/plot = BA/ 500m2</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [132]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [127]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">ba</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
     <span class="k">return</span><span class="p">((</span><span class="mf">0.005454</span> <span class="o">*</span> <span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">col</span> <span class="o">=</span> <span class="n">treeDB</span><span class="p">[</span><span class="s1">'DBH'</span><span class="p">]</span>
-<span class="n">treeDB</span><span class="p">[</span><span class="s1">'basalarea/plot'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ba</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-<span class="n">treeDB</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">col</span> <span class="o">=</span> <span class="n">surDB</span><span class="p">[</span><span class="s1">'DBH'</span><span class="p">]</span>
+<span class="n">surDB</span><span class="p">[</span><span class="s1">'BasalArea/Plot'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ba</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="n">surDB</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -8643,7 +9066,7 @@ BA/plot = BA/ 500m2</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[132]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[127]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8665,6 +9088,7 @@ BA/plot = BA/ 500m2</p>
 <th></th>
 <th>BS_plot</th>
 <th>Species</th>
+<th>StemID</th>
 <th>SampleYear</th>
 <th>CrownPosition</th>
 <th>HealthClass</th>
@@ -8672,7 +9096,6 @@ BA/plot = BA/ 500m2</p>
 <th>EpicormicSprouts</th>
 <th>DBH</th>
 <th>Status</th>
-<th>DeadClass</th>
 <th>...</th>
 <th>Forest type</th>
 <th>elevation</th>
@@ -8681,9 +9104,9 @@ BA/plot = BA/ 500m2</p>
 <th>group</th>
 <th>p_ram presence</th>
 <th>fire_presence</th>
-<th>dead</th>
-<th>censored</th>
-<th>basalarea/plot</th>
+<th>RametFail</th>
+<th>BasalArea/Plot</th>
+<th>GenetFail</th>
 </tr>
 </thead>
 <tbody>
@@ -8691,6 +9114,7 @@ BA/plot = BA/ 500m2</p>
 <th>0</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-1</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -8698,7 +9122,6 @@ BA/plot = BA/ 500m2</p>
 <td>False</td>
 <td>10.2000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>2</td>
 <td>359</td>
@@ -8708,13 +9131,14 @@ BA/plot = BA/ 500m2</p>
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
 <td>0.0011</td>
+<td>0.0000</td>
 </tr>
 <tr>
 <th>1</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-2</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -8722,7 +9146,6 @@ BA/plot = BA/ 500m2</p>
 <td>False</td>
 <td>1.2000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>2</td>
 <td>359</td>
@@ -8732,13 +9155,14 @@ BA/plot = BA/ 500m2</p>
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
+<td>0.0000</td>
 <td>0.0000</td>
 </tr>
 <tr>
 <th>2</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-3</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -8746,7 +9170,6 @@ BA/plot = BA/ 500m2</p>
 <td>False</td>
 <td>1.4000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>2</td>
 <td>359</td>
@@ -8756,13 +9179,14 @@ BA/plot = BA/ 500m2</p>
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
+<td>0.0000</td>
 <td>0.0000</td>
 </tr>
 <tr>
 <th>3</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5170-1</td>
 <td>2006</td>
 <td>U</td>
 <td>1.0000</td>
@@ -8770,7 +9194,6 @@ BA/plot = BA/ 500m2</p>
 <td>False</td>
 <td>2.7000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>2</td>
 <td>359</td>
@@ -8780,13 +9203,14 @@ BA/plot = BA/ 500m2</p>
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
 <td>0.0001</td>
+<td>0.0000</td>
 </tr>
 <tr>
 <th>4</th>
 <td>BS002</td>
 <td>SESE</td>
+<td>5171-1</td>
 <td>2006</td>
 <td>E</td>
 <td>1.0000</td>
@@ -8794,7 +9218,6 @@ BA/plot = BA/ 500m2</p>
 <td>False</td>
 <td>112.0000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>2</td>
 <td>359</td>
@@ -8804,12 +9227,12 @@ BA/plot = BA/ 500m2</p>
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
 <td>0.1368</td>
+<td>0.0000</td>
 </tr>
 </tbody>
 </table>
-<p>5 rows × 21 columns</p>
+<p>5 rows × 24 columns</p>
 </div>
 </div>
 </div>
@@ -8820,7 +9243,7 @@ BA/plot = BA/ 500m2</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [133]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [128]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">treeDB</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'./treeDB.csv'</span><span class="p">)</span>
@@ -8845,7 +9268,7 @@ BA/plot = BA/ 500m2</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [117]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [129]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cwdDB</span> <span class="o">=</span> <span class="n">bs_data</span><span class="p">[</span><span class="s1">'cwd_species'</span><span class="p">]</span>
@@ -8966,7 +9389,7 @@ BA/plot = BA/ 500m2</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [118]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [130]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">densityDB</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -8984,7 +9407,7 @@ BA/plot = BA/ 500m2</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[118]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[130]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9046,12 +9469,12 @@ BA/plot = BA/ 500m2</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [119]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [131]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#merge cwd with density</span>
 <span class="n">cwdDB</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">cwdDB</span><span class="p">,</span> <span class="n">densityDB</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'DecayClass'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
-<span class="n">cwdDB</span><span class="p">[</span><span class="s1">'Mass (unknown)/plot'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cwdDB</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">cwdDB</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">cwdDB</span><span class="p">[</span><span class="s1">'Mass (tonnes)/plot'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cwdDB</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">cwdDB</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">cwdDB</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -9063,7 +9486,7 @@ BA/plot = BA/ 500m2</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[119]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[131]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9089,7 +9512,7 @@ BA/plot = BA/ 500m2</p>
 <th>DecayClass</th>
 <th>Volume/500m2 plot</th>
 <th>Density (g cm-3)</th>
-<th>Mass (unknown)/plot</th>
+<th>Mass (tonnes)/plot</th>
 </tr>
 </thead>
 <tbody>
@@ -9155,7 +9578,7 @@ BA/plot = BA/ 500m2</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [121]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [132]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'comparing the amount of unique plots per dataset'</span><span class="p">)</span>
@@ -9198,11 +9621,11 @@ cwd data (no 2006/7): 153
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [137]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [133]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'sum the total mass per plot per year...'</span><span class="p">)</span>
-<span class="n">cwdMass</span> <span class="o">=</span> <span class="n">cwdDB</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'BS_plot'</span><span class="p">,</span> <span class="s1">'SampleYear'</span><span class="p">])[</span><span class="s1">'Mass (unknown)/plot'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>\
+<span class="n">cwdMass</span> <span class="o">=</span> <span class="n">cwdDB</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'BS_plot'</span><span class="p">,</span> <span class="s1">'SampleYear'</span><span class="p">])[</span><span class="s1">'Mass (tonnes)/plot'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>\
     <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'CWD Mass sum'</span><span class="p">)</span>
 <span class="n">cwdMass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -9222,7 +9645,7 @@ cwd data (no 2006/7): 153
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[137]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[133]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9290,11 +9713,11 @@ cwd data (no 2006/7): 153
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [141]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [134]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># merge cwd to tree data, export</span>
-<span class="n">frankDB</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">treeDB</span><span class="p">,</span> <span class="n">cwdMass</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">'BS_plot'</span><span class="p">,</span> <span class="s1">'SampleYear'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
+<span class="n">frankDB</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">surDB</span><span class="p">,</span> <span class="n">cwdMass</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">'BS_plot'</span><span class="p">,</span> <span class="s1">'SampleYear'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span> <span class="c1">#left merge to keep na</span>
 <span class="n">frankDB</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -9306,7 +9729,7 @@ cwd data (no 2006/7): 153
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[141]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[134]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9328,6 +9751,7 @@ cwd data (no 2006/7): 153
 <th></th>
 <th>BS_plot</th>
 <th>Species</th>
+<th>StemID</th>
 <th>SampleYear</th>
 <th>CrownPosition</th>
 <th>HealthClass</th>
@@ -9335,7 +9759,6 @@ cwd data (no 2006/7): 153
 <th>EpicormicSprouts</th>
 <th>DBH</th>
 <th>Status</th>
-<th>DeadClass</th>
 <th>...</th>
 <th>elevation</th>
 <th>slope</th>
@@ -9343,9 +9766,9 @@ cwd data (no 2006/7): 153
 <th>group</th>
 <th>p_ram presence</th>
 <th>fire_presence</th>
-<th>dead</th>
-<th>censored</th>
-<th>basalarea/plot</th>
+<th>RametFail</th>
+<th>BasalArea/Plot</th>
+<th>GenetFail</th>
 <th>CWD Mass sum</th>
 </tr>
 </thead>
@@ -9354,6 +9777,7 @@ cwd data (no 2006/7): 153
 <th>0</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-1</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -9361,7 +9785,6 @@ cwd data (no 2006/7): 153
 <td>False</td>
 <td>10.2000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>359</td>
 <td>33</td>
@@ -9370,14 +9793,15 @@ cwd data (no 2006/7): 153
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
 <td>0.0011</td>
+<td>0.0000</td>
 <td>NaN</td>
 </tr>
 <tr>
 <th>1</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-2</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -9385,7 +9809,6 @@ cwd data (no 2006/7): 153
 <td>False</td>
 <td>1.2000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>359</td>
 <td>33</td>
@@ -9394,7 +9817,7 @@ cwd data (no 2006/7): 153
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
+<td>0.0000</td>
 <td>0.0000</td>
 <td>NaN</td>
 </tr>
@@ -9402,6 +9825,7 @@ cwd data (no 2006/7): 153
 <th>2</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5169-3</td>
 <td>2006</td>
 <td>I</td>
 <td>1.0000</td>
@@ -9409,7 +9833,6 @@ cwd data (no 2006/7): 153
 <td>False</td>
 <td>1.4000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>359</td>
 <td>33</td>
@@ -9418,7 +9841,7 @@ cwd data (no 2006/7): 153
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
+<td>0.0000</td>
 <td>0.0000</td>
 <td>NaN</td>
 </tr>
@@ -9426,6 +9849,7 @@ cwd data (no 2006/7): 153
 <th>3</th>
 <td>BS002</td>
 <td>LIDE</td>
+<td>5170-1</td>
 <td>2006</td>
 <td>U</td>
 <td>1.0000</td>
@@ -9433,7 +9857,6 @@ cwd data (no 2006/7): 153
 <td>False</td>
 <td>2.7000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>359</td>
 <td>33</td>
@@ -9442,14 +9865,15 @@ cwd data (no 2006/7): 153
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
 <td>0.0001</td>
+<td>0.0000</td>
 <td>NaN</td>
 </tr>
 <tr>
 <th>4</th>
 <td>BS002</td>
 <td>SESE</td>
+<td>5171-1</td>
 <td>2006</td>
 <td>E</td>
 <td>1.0000</td>
@@ -9457,7 +9881,6 @@ cwd data (no 2006/7): 153
 <td>False</td>
 <td>112.0000</td>
 <td>L</td>
-<td>NaN</td>
 <td>...</td>
 <td>359</td>
 <td>33</td>
@@ -9466,13 +9889,13 @@ cwd data (no 2006/7): 153
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>1</td>
 <td>0.1368</td>
+<td>0.0000</td>
 <td>NaN</td>
 </tr>
 </tbody>
 </table>
-<p>5 rows × 22 columns</p>
+<p>5 rows × 25 columns</p>
 </div>
 </div>
 </div>
@@ -9483,10 +9906,194 @@ cwd data (no 2006/7): 153
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [142]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [135]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">frankDB</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'frank.csv'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=62d957c3-f2bc-4edd-9cab-2db409a65f13">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Survival-analysis-dataframe">Survival analysis dataframe<a class="anchor-link" href="#Survival-analysis-dataframe">¶</a></h3><p>Need new column, time since study start,<br/>
+where t = SampleYear - 2006<br/>
+Isolate only relevant data to survival analysis</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=08f92628-56eb-4088-99ad-19fbf4aa0ebf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [152]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">surDB</span><span class="p">[</span><span class="s1">'t'</span><span class="p">]</span> <span class="o">=</span> <span class="n">surDB</span><span class="p">[</span><span class="s1">'SampleYear'</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2006</span>
+<span class="n">failDB</span> <span class="o">=</span> <span class="n">surDB</span><span class="p">[[</span><span class="s1">'BS_plot'</span><span class="p">,</span><span class="s1">'Forest type'</span><span class="p">,</span> <span class="s1">'Species'</span><span class="p">,</span><span class="s1">'GenetId'</span><span class="p">,</span><span class="s1">'RametId'</span><span class="p">,</span><span class="s1">'SampleYear'</span><span class="p">,</span> <span class="s1">'t'</span><span class="p">,</span>\
+    <span class="s1">'RametFail'</span><span class="p">,</span><span class="s1">'GenetFail'</span><span class="p">,</span> <span class="s1">'DBH'</span><span class="p">,</span> <span class="s1">'elevation'</span><span class="p">,</span> <span class="s1">'slope'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">,</span> <span class="s1">'p_ram presence'</span><span class="p">,</span> <span class="s1">'fire_presence'</span><span class="p">]]</span>
+<span class="n">failDB</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[152]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>BS_plot</th>
+<th>Forest type</th>
+<th>Species</th>
+<th>GenetId</th>
+<th>RametId</th>
+<th>SampleYear</th>
+<th>t</th>
+<th>RametFail</th>
+<th>GenetFail</th>
+<th>DBH</th>
+<th>elevation</th>
+<th>slope</th>
+<th>group</th>
+<th>p_ram presence</th>
+<th>fire_presence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>BS002</td>
+<td>2</td>
+<td>LIDE</td>
+<td>5169</td>
+<td>1</td>
+<td>2006</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>10.2000</td>
+<td>359</td>
+<td>33</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>1</th>
+<td>BS002</td>
+<td>2</td>
+<td>LIDE</td>
+<td>5169</td>
+<td>2</td>
+<td>2006</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>1.2000</td>
+<td>359</td>
+<td>33</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>2</th>
+<td>BS002</td>
+<td>2</td>
+<td>LIDE</td>
+<td>5169</td>
+<td>3</td>
+<td>2006</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>1.4000</td>
+<td>359</td>
+<td>33</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>BS002</td>
+<td>2</td>
+<td>LIDE</td>
+<td>5170</td>
+<td>1</td>
+<td>2006</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>2.7000</td>
+<td>359</td>
+<td>33</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>BS002</td>
+<td>2</td>
+<td>SESE</td>
+<td>5171</td>
+<td>1</td>
+<td>2006</td>
+<td>0</td>
+<td>0</td>
+<td>0.0000</td>
+<td>112.0000</td>
+<td>359</td>
+<td>33</td>
+<td>control</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ea9e0d34-833a-4e4b-bb3b-377bd7556576">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [153]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">failDB</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'rawsurvival.csv'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9500,20 +10107,6 @@ cwd data (no 2006/7): 153
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="Link-to-modeling-document"><a href="./modeling_R.html">Link to modeling document</a><a class="anchor-link" href="#Link-to-modeling-document">¶</a></h4>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=139853dc-2fda-4b35-95ca-48e6a679ffbf">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-</div>
 </div>
 </div>
 </div>
